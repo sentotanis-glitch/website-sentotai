@@ -8,7 +8,7 @@
    (Mengedit berkas ini langsung juga boleh, tapi lebih rawan salah ketik.)
    ===================================================================== */
 window.SA_DATA = {
-  _t: 1790770052228,   // penanda versi (diisi otomatis oleh build/admin)
+  _t: 1790775166582,   // penanda versi (diisi otomatis oleh build/admin)
 
   PROFIL: {
   brandJasa: "SENTOT AI",              // divisi jasa & teknologi
@@ -34,7 +34,7 @@ window.SA_DATA = {
   KATEGORI: [
   { id: "semua",   nama: "Semua Produk",           ico: "grid" },
   { id: "pakaian", nama: "Pakaian Muslim",         ico: "shirt" },
-  { id: "haji",    nama: "Perlengkapan Haji & Umroh", ico: "kaaba" },
+  { id: "haji",    nama: "Perlengkapan Ibadah, Haji & Umroh", ico: "kaaba" },
   { id: "parfum",  nama: "Minyak Wangi & Parfum",  ico: "drop" },
   { id: "kosmetik",nama: "Kosmetik & Perawatan Tubuh", ico: "sparkle" }
 ],
@@ -96,6 +96,77 @@ window.SA_DATA = {
     varian: ["Standar", "Jumbo"],
     deskripsi: "Kain ihram katun tebal nyaman dipakai, dilengkapi sabuk/kantong uang haji anti air. Aman untuk menyimpan uang, kartu, dan dokumen penting."
   },
+  /* ---------- PAKAIAN: SARUNG (pria) ---------- */
+  {
+    id: "sarung-wadimor", nama: "Sarung Wadimor Katun Premium", kategori: "pakaian",
+    harga: 175000, hargaCoret: 215000, gambar: "assets/img/sarung-wadimor.jpg",
+    rating: 4.9, terjual: "240+", badge: "Terlaris",
+    varian: ["Hijau", "Navy", "Maroon", "Cokelat", "Motif Kotak"],
+    deskripsi: "Sarung wadimor katun halus, adem dan tidak licin saat dipakai sholat. Tersedia warna polos dan motif kotak, nyaman untuk harian maupun acara."
+  },
+  {
+    id: "sarung-satin", nama: "Sarung Satin Sutra Motif (Edisi Bagus)", kategori: "pakaian",
+    harga: 265000, hargaCoret: 320000, gambar: "assets/img/sarung-satin.jpg",
+    rating: 4.8, terjual: "95+", badge: "Favorit",
+    varian: ["Emas Hijau", "Emas Maroon", "Emas Hitam"],
+    deskripsi: "Sarung satin mengkilap dengan motif tenun halus, jatuh rapi dan mewah. Pilihan tepat untuk sholat Jumat, kondangan, atau hadiah untuk ayah dan kakek."
+  },
+  {
+    id: "sarung-anak", nama: "Sarung Anak Motif Lucu (Ukuran 3-12 th)", kategori: "pakaian",
+    harga: 85000, hargaCoret: 105000, gambar: "assets/img/sarung-anak.jpg",
+    rating: 4.9, terjual: "160+", badge: "",
+    varian: ["Biru", "Kuning", "Mint", "Merah", "Ukuran 3-6 th", "Ukuran 7-12 th"],
+    deskripsi: "Sarung anak warna cerah dengan motif lucu, bahan katun lembut tidak panas. Karet pinggang elastis sehingga mudah dipakai anak sendiri."
+  },
+
+  /* ---------- SAJADAH ---------- */
+  {
+    id: "sajadah-premium", nama: "Sajadah Bulu Tebal Premium Motif Masjid", kategori: "haji",
+    harga: 185000, hargaCoret: 235000, gambar: "assets/img/sajadah-premium.jpg",
+    rating: 4.9, terjual: "180+", badge: "Terlaris",
+    varian: ["Hijau Masjid", "Maroon", "Cokelat", "Biru Tua"],
+    deskripsi: "Sajadah bulu tebal 1,5 cm dengan busa empuk, tidak sakit saat dipakai di lantai keras. Motif masjid klasik, bagian bawah anti licin."
+  },
+  {
+    id: "sajadah-kado", nama: "Sajadah Kado Set (Sajadah + Tasbih + Al-Qur'an)", kategori: "haji",
+    harga: 275000, hargaCoret: 340000, gambar: "assets/img/sajadah-kado.jpg",
+    rating: 5.0, terjual: "120+", badge: "Paling Hemat",
+    varian: ["Dusty Rose", "Cream", "Hijau"],
+    deskripsi: "Paket kado cantik: sajadah bulu halus, tasbih, dan Al-Qur'an kecil dalam kotak dengan pita. Siap diberikan untuk walimah, kelahiran, atau hadiah untuk orang tua."
+  },
+
+  /* ---------- MUKENA ---------- */
+  {
+    id: "mukena-premium", nama: "Mukena Katun Jepang Premium (Bukan Travel)", kategori: "pakaian",
+    harga: 235000, hargaCoret: 295000, gambar: "assets/img/mukena-premium.jpg",
+    rating: 4.9, terjual: "150+", badge: "Terlaris",
+    varian: ["Putih", "Cream", "Dusty Pink", "Hijau Mint"],
+    deskripsi: "Mukena katun jepang tebal dan adem, dengan renda halus serta bordir rapi. Potongan panjang dan lebar, nyaman untuk sholat di rumah maupun di masjid."
+  },
+  {
+    id: "mukena-anak", nama: "Mukena Anak Motif Bunga (3-12 th)", kategori: "pakaian",
+    harga: 145000, hargaCoret: 175000, gambar: "assets/img/mukena-anak.jpg",
+    rating: 4.8, terjual: "110+", badge: "",
+    varian: ["Pink", "Mint", "Ungu", "Biru"],
+    deskripsi: "Mukena anak warna pastel dengan bordir bunga kecil, bahan katun lembut. Ringan dipakai anak dan mudah dibawa ke masjid atau mengaji."
+  },
+
+  /* ---------- HIJAB ---------- */
+  {
+    id: "hijab-instan", nama: "Hijab Instan Jersey Premium (Bergo)", kategori: "pakaian",
+    harga: 55000, hargaCoret: 75000, gambar: "assets/img/hijab-instan.jpg",
+    rating: 4.9, terjual: "380+", badge: "Terlaris",
+    varian: ["Cream", "Dusty Rose", "Hitam", "Abu", "Navy"],
+    deskripsi: "Hijab instan bahan jersey adem, langsung pakai tanpa peniti dan tidak mudah melorot. Cocok untuk kerja, kuliah, dan aktivitas harian."
+  },
+  {
+    id: "hijab-voal", nama: "Hijab Segi Empat Voal Motif Bunga", kategori: "pakaian",
+    harga: 65000, hargaCoret: 85000, gambar: "assets/img/hijab-voal.jpg",
+    rating: 4.8, terjual: "290+", badge: "Promo",
+    varian: ["Dusty Blue", "Cream", "Mauve", "Sage"],
+    deskripsi: "Hijab voal segi empat dengan motif bunga halus dan jahitan tepi rapi (baby seam). Tidak menerawang, mudah dibentuk, nyaman dipakai seharian."
+  },
+
   {
     id: "parfum-oud", nama: "Parfum Arab Oud Al-Layl 50 ml", kategori: "parfum",
     harga: 185000, hargaCoret: 225000, gambar: "assets/img/parfum-arab.jpg",
