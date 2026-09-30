@@ -1,0 +1,6 @@
+# berkas yang tidak perlu ikut ke GitHub
+cadangan-data/
+panel-admin.html
+*.zip
+.DS_Store
+Thumbs.db
