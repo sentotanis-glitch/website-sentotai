@@ -9,6 +9,9 @@ Toko + layanan jasa satu halaman, plus panel pengelola yang **terkunci password 
 Panel lama (`panel-sentot-2026.html`, `admin.html`) kini hanya **pengalih** ke `/admin`. Berkas editor terbuka
 tidak ada lagi di repo — dulu panel itu bisa dibuka siapa pun tanpa password, sekarang tidak.
 
+> **Satu hal yang hanya bisa Anda lakukan:** mengisi `ADMIN_PASSWORD` di Vercel (bagian 1 di bawah).
+> Tanpa itu, `/admin` menolak semua orang — termasuk Anda — jadi tidak ada password bawaan yang perlu dicari.
+
 ---
 
 ## 1. Menyetel password (satu kali, ±2 menit)
@@ -19,8 +22,9 @@ dan diperiksa hanya di server.
 1. Buka **vercel.com** → pilih project `website-sentotai`.
 2. **Settings → Environment Variables → Production** → Add New:
    - Key: `ADMIN_PASSWORD`
-   - Value: password Anda (minimal **16** karakter, maksimal 512). Disarankan 4–5 kata acak, mis.
-     `Ayam-minyak-balai-petai-mutiara-776` — ganti dengan punya Anda, jangan pakai contoh ini.
+   - Value: password buatan Anda sendiri, minimal **16** karakter. Pakai 4–5 kata tak berhubungan
+     + angka (contoh bentuk: `kata-kata-kata-kata-kata-123`), jangan contoh ini dan jangan password
+     yang dipakai di tempat lain. Jangan taruh password di berkas mana pun di repo ini.
    - Key: `GITHUB_TOKEN` *(opsional, perlu untuk tombol Terbitkan/Kirim ke GitHub)* —
      fine-grained token, akses **hanya repo ini**, izin **Contents: Read and write**.
 3. **Deployments → ⋯ → Redeploy** (env baru hanya aktif setelah deploy ulang).
