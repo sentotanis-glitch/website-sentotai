@@ -56,6 +56,30 @@ function contextOf(html) {
   const m = html.match(/window\.__SA_SECURE_ADMIN__=(\{.*?\});<\/script>/s);
   return m ? JSON.parse(m[1].replace(/\\u003c/g, '<')) : null;
 }
+function jpegSize(buf) {
+  // Baca dimensi dari penanda SOF berkas JPEG — tanpa dependensi luar.
+  for (let i = 2; i + 9 < buf.length;) {
+    if (buf[i] !== 0xff) { i++; continue; }
+    const marker = buf[i + 1];
+    if (marker === 0xd8 || marker === 0x01 || marker === 0xd9 || (marker >= 0xd0 && marker <= 0xd7)) { i += 2; continue; }
+    if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) {
+      return {height:buf.readUInt16BE(i + 5), width:buf.readUInt16BE(i + 7)};
+    }
+    i += 2 + buf.readUInt16BE(i + 2);
+  }
+  throw new Error('Dimensi JPEG tidak terbaca');
+}
+function panelCopy(name) {
+  // Ambil isi salinan berkas storefront yang tertanam di panel admin (string literal JS).
+  const panel = JSON.parse(fs.readFileSync(path.join(ROOT, 'server', 'panel-template.json'), 'utf8')).html;
+  const marker = `const ${name} = "`;
+  const i = panel.indexOf(marker);
+  assert.ok(i >= 0, 'salinan ' + name + ' tidak ditemukan di panel');
+  let j = i + marker.length;
+  const awal = j;
+  while (j < panel.length) { if (panel[j] === '\\') { j += 2; continue; } if (panel[j] === '"') break; j++; }
+  return JSON.parse('"' + panel.slice(awal, j) + '"');
+}
 
 const tests = [];
 const test = (name, fn) => tests.push([name, fn]);
@@ -265,6 +289,57 @@ test('aksi & metode tak dikenal ditolak rapi', async () => {
   assert.equal((await request('GET', '/api/admin?action=logout')).status, 405, 'logout wajib POST');
   assert.equal((await request('POST', '/api/admin?action=session', {cookie: session})).status, 405, 'session hanya GET');
   assert.equal((await request('GET', '/admin', {host: 'host tidak valid!'})).status, 400, 'Host header asing -> 400');
+});
+
+test('perbaikan tampilan & login: logo SC persegi, slot foto SENTOT AI berlencana SAI, spasi password diabaikan', async () => {
+  const baca = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
+
+  /* 1) logo Sofia Collection: berkas 800x800 dan benar-benar persegi */
+  const logo = fs.readFileSync(path.join(ROOT, 'assets', 'logo-sc.jpg'));
+  const ukuran = jpegSize(logo);
+  assert.equal(ukuran.width, 800, 'lebar assets/logo-sc.jpg harus 800 px, dapat ' + ukuran.width);
+  assert.equal(ukuran.height, 800, 'tinggi assets/logo-sc.jpg harus 800 px (persegi), dapat ' + ukuran.height);
+  assert.ok(fs.readFileSync(path.join(ROOT, 'public', 'assets', 'logo-sc.jpg')).equals(logo), 'public/ harus memuat logo yang sama persis');
+
+  /* 2) marka + gaya: logo tampil kotak, bukan gepeng */
+  const toko = baca(path.join('public', 'index.html'));
+  assert.match(toko, /<img class="brand-logo" src="assets\/logo-sc\.jpg" alt="Logo Sofia Collection" width="800" height="800">/, 'marka logo di index.html harus 800x800');
+  const gaya = baca(path.join('public', 'src', 'styles.css'));
+  const aturanLogo = gaya.slice(gaya.indexOf('.brand-logo{'), gaya.indexOf('}', gaya.indexOf('.brand-logo{')));
+  assert.match(aturanLogo, /aspect-ratio:1\/1/, 'logo harus dipaksa persegi lewat aspect-ratio: ' + aturanLogo);
+  assert.match(aturanLogo, /object-fit:cover/, 'logo harus object-fit:cover agar tidak gepeng: ' + aturanLogo);
+  assert.match(aturanLogo, /width:96px;height:96px/, 'ukuran tampil logo harus sama sisi: ' + aturanLogo);
+
+  /* 3) kartu SENTOT AI: slot foto pemilik + lencana SAI */
+  assert.match(toko, /<span class="brand-photo" id="fotoSentot">/, 'slot foto pemilik belum ada di kartu SENTOT AI');
+  assert.match(toko, /<img class="brand-photo-img" src="assets\/foto-sentot\.jpg"[^>]*alt="Foto Sentot, pemilik SENTOT AI"/, 'slot harus menunjuk assets/foto-sentot.jpg dengan alt yang jelas');
+  assert.match(toko, /<span class="brand-badge" title="SENTOT AI">SAI<\/span>/, 'lencana SAI harus menempel di slot foto');
+  for (const aturan of ['.brand-photo{', '.brand-photo-img{', '.brand-badge{', '.brand-photo.is-kosong .brand-photo-img{', '.brand-photo-fallback{'])
+    assert.ok(gaya.includes(aturan), 'gaya slot foto belum lengkap, kurang ' + aturan);
+  const aturanFoto = gaya.slice(gaya.indexOf('.brand-photo{'), gaya.indexOf('}', gaya.indexOf('.brand-photo{')));
+  assert.match(aturanFoto, /aspect-ratio:1\/1/, 'slot foto juga harus persegi: ' + aturanFoto);
+  const aplikasi = baca(path.join('public', 'src', 'app.js'));
+  assert.ok(aplikasi.includes('function siapkanFotoPemilik()'), 'fallback slot foto (bila berkas belum diunggah) belum ada di app.js');
+  assert.match(aplikasi, /renderKeranjang\(\);\n  siapkanFotoPemilik\(\);/, 'siapkanFotoPemilik() harus dipanggil saat init');
+
+  /* 4) salinan di dalam panel tidak basi — "Terbitkan" tidak boleh membatalkan perbaikan ini */
+  assert.equal(panelCopy('TEMPLATE_MULTI'), baca('index.html'), 'TEMPLATE_MULTI di panel berbeda dari index.html');
+  assert.equal(panelCopy('APLIKASI'), baca('src/app.js'), 'APLIKASI di panel berbeda dari src/app.js');
+  assert.equal(panelCopy('GAYA'), baca('src/styles.css'), 'GAYA di panel berbeda dari src/styles.css');
+  const panel = JSON.parse(baca(path.join('server', 'panel-template.json'))).html;
+  const b64Logo = panel.match(/"assets\/logo-sc\.jpg":\{"mime":"image\/jpeg","b64":"([^"]+)"/);
+  assert.ok(b64Logo, 'ASET panel harus menyimpan logo SC');
+  assert.ok(Buffer.from(b64Logo[1], 'base64').equals(logo), 'salinan logo di panel masih versi lama');
+
+  /* 5) spasi di sekitar password admin diabaikan, syarat panjang tetap dihitung setelah dirapikan */
+  await withServer({env: {ADMIN_PASSWORD: '  password-uji-lokal-12345678  '}}, async p => {
+    assert.equal((await login('password-uji-lokal-12345678', '198.51.100.61', p)).status, 303, 'password tanpa spasi harus tetap cocok walau ADMIN_PASSWORD tersimpan dengan spasi');
+    assert.equal((await login('  password-uji-lokal-12345678\n', '198.51.100.62', p)).status, 303, 'spasi/enter yang ikut terkirim saat login harus diabaikan');
+    assert.equal((await login('password-uji-lokal-1234567', '198.51.100.63', p)).status, 401, 'password salah tetap harus ditolak');
+  });
+  await withServer({env: {ADMIN_PASSWORD: '     terlalu-pendek     '}}, async p => {
+    assert.equal((await request('GET', '/admin', {usePort: p})).status, 503, 'panjang minimum 16 karakter dihitung setelah spasi dibuang');
+  });
 });
 
 (async () => {
