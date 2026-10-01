@@ -25,6 +25,7 @@ dan diperiksa hanya di server.
    - Value: password buatan Anda sendiri, minimal **16** karakter. Pakai 4–5 kata tak berhubungan
      + angka (contoh bentuk: `kata-kata-kata-kata-kata-123`), jangan contoh ini dan jangan password
      yang dipakai di tempat lain. Jangan taruh password di berkas mana pun di repo ini.
+     Spasi atau baris baru di awal/akhir ikut terhapus otomatis — jadi salin-tempel tidak bikin gagal masuk.
    - Key: `GITHUB_TOKEN` *(opsional, perlu untuk tombol Terbitkan/Kirim ke GitHub)* —
      fine-grained token, akses **hanya repo ini**, izin **Contents: Read and write**.
 3. **Deployments → ⋯ → Redeploy** (env baru hanya aktif setelah deploy ulang).
@@ -41,13 +42,15 @@ deploy, dan ditambatkan ke password).
 | Berkas / folder | Keterangan |
 |---|---|
 | `index.html`, `src/{data,app,styles}.*`, `assets/` | Toko publik. Konten tetap diedit lewat panel |
+| `assets/logo-sc.jpg` | Logo Sofia Collection, **800×800 (persegi)** — tampil 96×96 px di kartu brand |
+| `assets/foto-sentot.jpg` | Foto Anda untuk kartu **SENTOT AI** (persegi, min. 400×400). Belum ada? Slot otomatis menampilkan monogram "S" dengan lencana **SAI** tetap di pojoknya |
 | `api/admin.js` | Titik masuk Vercel Function (login, logout, sesi, panel, proxy GitHub) |
 | `server/auth.cjs` | Password, sesi, CSRF, rate limit, penyaring operasi GitHub |
 | `server/login.html` | Tampilan login |
 | `server/panel-template.json` | Antarmuka panel — **bukan** kredensial, tidak ikut output publik |
 | `server/panel-redirect.html` | Isi pengalih untuk alamat panel lama |
 | `scripts/vercel-build.cjs` | Build: salin hanya storefront ke `public/`, buat kunci sesi acak di `.server/` |
-| `scripts/test-auth.cjs` | Uji keamanan mandiri (18 pemeriksaan) |
+| `scripts/test-auth.cjs` | Uji keamanan mandiri (19 pemeriksaan) |
 | `vercel.json` | Root directory repo ini; rewrite `/admin` → function; header cache |
 
 ## 3. Cara memakai panel
@@ -70,7 +73,7 @@ Sesi berlaku 1 jam. Cadangan: **🗄 Unduh cadangan data (JSON)**; pulihkan lewa
 Uji lokal sebelum terbit (tanpa jaringan, tanpa kredensial nyata):
 
 ```bash
-ADMIN_PASSWORD='password-uji-anda-1234567890' node scripts/test-auth.cjs   # buat public/ + 18 uji
+ADMIN_PASSWORD='password-uji-anda-1234567890' node scripts/test-auth.cjs   # buat public/ + 19 uji
 ```
 
 `public/`, `.server/`, `.env*` sudah di-`.gitignore` — jangan pernah diunggah.

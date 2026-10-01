@@ -129,6 +129,20 @@ function renderProfil() {
   ].map(t => `<li>${svg("check", 15)} ${t}</li>`).join("");
 }
 
+/* ---------- slot foto pemilik (kartu SENTOT AI) ----------
+   Foto dibaca dari assets/foto-sentot.jpg. Bila berkasnya belum ada, slot
+   menampilkan monogram "S" — lencana SAI tetap tampil di pojok slot. */
+function siapkanFotoPemilik() {
+  const kotak = $("#fotoSentot");
+  if (!kotak) return;
+  const img = $(".brand-photo-img", kotak);
+  if (!img) { kotak.classList.add("is-kosong"); return; }
+  const perbarui = () => kotak.classList.toggle("is-kosong", !(img.complete && img.naturalWidth > 0));
+  img.addEventListener("load", perbarui);
+  img.addEventListener("error", () => kotak.classList.add("is-kosong"));
+  if (img.complete) perbarui();
+}
+
 /* ---------- render: katalog ---------- */
 function renderKategori() {
   $("#chips").innerHTML = KATEGORI.map(k => {
@@ -390,6 +404,7 @@ const tutupSemua = () => { tutupDrawer(); $$(".modal.show").forEach(m => m.class
 function init() {
   muatData();
   renderProfil(); renderKategori(); renderProduk(); renderJasa(); renderTestiFaq(); renderKeranjang();
+  siapkanFotoPemilik();
 
   $("#cartBtn").addEventListener("click", bukaDrawer);
   $("#closeCart").addEventListener("click", tutupDrawer);

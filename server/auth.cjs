@@ -121,8 +121,11 @@ function createHandler(options = {}) {
   // instance, same trade-off as the rate limiter above).
   const revoked = new Map();
   function settings() {
-    const password = env.ADMIN_PASSWORD || '';
-    if (typeof password !== 'string' || password.length < 16 || password.length > 512) return null;
+    // Spasi / baris baru di awal atau akhir ADMIN_PASSWORD (sering terbawa saat
+    // salin-tempel di dashboard Vercel) diabaikan agar login tidak gagal diam-diam.
+    const raw = env.ADMIN_PASSWORD;
+    const password = typeof raw === 'string' ? raw.trim() : '';
+    if (password.length < 16 || password.length > 512) return null;
     const r = resources();
     const key = Buffer.from(r.deploymentKey, 'base64');
     if (key.length !== 32) return null;
@@ -194,7 +197,10 @@ function createHandler(options = {}) {
           res.setHeader('Retry-After',String(Math.ceil((previous.until-t)/1000)));
           return showLogin(req,res,cfg,'Terlalu banyak percobaan. Tunggu 15 menit, lalu coba lagi.',429);
         }
-        if (typeof form.password !== 'string' || form.password.length > 512 || !equal(form.password,cfg.password)) {
+        // Spasi/enter yang ikut terbawa saat mengetik atau menempel password diabaikan,
+        // sehingga cocok dengan ADMIN_PASSWORD yang sudah dirapikan di settings().
+        const dikirim = typeof form.password === 'string' ? form.password.trim() : '';
+        if (dikirim.length > 512 || !equal(dikirim,cfg.password)) {
           if (attempts.size >= 10000) { res.setHeader('Retry-After','900'); return showLogin(req,res,cfg,'Login sedang dibatasi. Silakan coba lagi nanti.',429); }
           attempts.set(ip,{count:(previous?.count || 0)+1,until:previous?.until || t+15*60*1000});
           await pause(400);
