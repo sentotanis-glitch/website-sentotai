@@ -1,5 +1,5 @@
 /* =====================================================================
-   DATA WEBSITE — SENTOT AI x SC (SOFIA COLLECTION)
+   DATA WEBSITE — SENTOT AI x SOFIA COLLECTION
    ---------------------------------------------------------------------
    Berkas ini berisi SEMUA isi website: profil usaha, produk, layanan jasa,
    testimoni, dan FAQ.
@@ -8,11 +8,11 @@
    (Mengedit berkas ini langsung juga boleh, tapi lebih rawan salah ketik.)
    ===================================================================== */
 window.SA_DATA = {
-  _t: 1790775166582,   // penanda versi (diisi otomatis oleh build/admin)
+  _t: 1790826458602,   // penanda versi (diisi otomatis oleh build/admin)
 
   PROFIL: {
   brandJasa: "SENTOT AI",              // divisi jasa & teknologi
-  brandToko: "SC — SOFIA COLLECTION",  // divisi toko / fashion & kebutuhan muslim
+  brandToko: "SOFIA COLLECTION",  // divisi toko / fashion & kebutuhan muslim
   pemilik: "Sentot",
   kota: "Surabaya, Jawa Timur",
   alamat: "Melayani area Surabaya & sekitarnya (Sidoarjo, Gresik) — pengiriman ke seluruh Indonesia",
