@@ -43,6 +43,7 @@ window.SA_DATA = {
   {
     id: "hijab-pashmina", nama: "Hijab Pashmina Premium", kategori: "pakaian",
     harga: 85000, hargaCoret: 119000, gambar: "assets/img/hijab.jpg",
+    galeri: ["assets/img/hijab-pashmina-b.jpg", "assets/img/hijab-pashmina-c.jpg"],
     rating: 4.9, terjual: "320+", badge: "Terlaris",
     varian: ["Cream", "Dusty Rose", "Sage", "Mocha", "Hitam"],
     deskripsi: "Bahan rayon korea adem, jatuh, dan tidak menerawang. Cocok untuk harian, kerja, maupun acara. Lebar 180 x 75 cm, jahitan rapi."
@@ -50,6 +51,7 @@ window.SA_DATA = {
   {
     id: "gamis-abaya", nama: "Gamis Syar'i Abaya Mutiara (Bordir Emas)", kategori: "pakaian",
     harga: 285000, hargaCoret: 349000, gambar: "assets/img/abaya.jpg",
+    galeri: ["assets/img/gamis-abaya-b.jpg", "assets/img/gamis-abaya-c.jpg"],
     rating: 4.8, terjual: "180+", badge: "Best Seller",
     varian: ["S", "M", "L", "XL", "XXL"],
     deskripsi: "Abaya bahan nida premium, tebal tapi tidak panas, bordir emas di lengan. Potongan longgar dan sopan, nyaman untuk ibadah & kegiatan sehari-hari."
@@ -57,6 +59,7 @@ window.SA_DATA = {
   {
     id: "koko-basic", nama: "Koko Basic Premium Pria", kategori: "pakaian",
     harga: 165000, hargaCoret: 0, gambar: "assets/img/koko.jpg",
+    galeri: ["assets/img/koko-basic-b.jpg", "assets/img/koko-basic-c.jpg"],
     rating: 4.8, terjual: "140+", badge: "",
     varian: ["M", "L", "XL", "XXL", "Putih", "Hitam", "Navy"],
     deskripsi: "Koko lengan panjang bahan katun premium, bordir halus di kerah. Adem, tidak mudah kusut, cocok untuk sholat Jumat sampai acara formal."
@@ -64,6 +67,7 @@ window.SA_DATA = {
   {
     id: "mukena-travel", nama: "Mukena Travel Lady Amira + Tas", kategori: "pakaian",
     harga: 195000, hargaCoret: 235000, gambar: "assets/img/mukena.jpg",
+    galeri: ["assets/img/mukena-travel-b.jpg", "assets/img/mukena-travel-c.jpg"],
     rating: 4.9, terjual: "210+", badge: "Promo",
     varian: ["Lilac", "Cream", "Dusty Pink", "Hitam"],
     deskripsi: "Mukena travel ringan dengan renda halus, dilengkapi tas jinjing. Dilipat rapi sehingga mudah dibawa saat perjalanan atau disimpan di tas kerja."
@@ -71,6 +75,7 @@ window.SA_DATA = {
   {
     id: "paket-umroh", nama: "Paket Perlengkapan Umroh Lengkap (9 Item)", kategori: "haji",
     harga: 750000, hargaCoret: 950000, gambar: "assets/img/umroh-set.jpg",
+    galeri: ["assets/img/paket-umroh-b.jpg", "assets/img/paket-umroh-c.webp"],
     rating: 5.0, terjual: "95+", badge: "Paling Hemat",
     varian: ["Pria", "Wanita"],
     deskripsi: "Isi: kain ihram/mukena, sajadah travel, tasbih, Al-Qur'an kecil, id card & lanyard, kantong sepatu, tas perlengkapan, buku panduan manasik, dan pouch kecil. Siap dipakai berangkat."
@@ -78,6 +83,7 @@ window.SA_DATA = {
   {
     id: "tas-travel-haji", nama: "Tas Travel Haji & Umroh Premium", kategori: "haji",
     harga: 320000, hargaCoret: 0, gambar: "assets/img/travelbag.jpg",
+    galeri: ["assets/img/tas-travel-haji-b.jpg", "assets/img/tas-travel-haji-c.jpg"],
     rating: 4.8, terjual: "120+", badge: "",
     varian: ["Hijau Tua", "Hitam", "Cokelat"],
     deskripsi: "Bahan kanvas tebal anti air, resleting YKK, banyak kompartemen. Bisa dipakai kabin dan tersedia strap tambahan untuk sajadah/gulungan."
@@ -85,6 +91,7 @@ window.SA_DATA = {
   {
     id: "sajadah-tasbih", nama: "Sajadah Travel Premium + Tasbih Kayu", kategori: "haji",
     harga: 95000, hargaCoret: 125000, gambar: "assets/img/umroh-set.jpg",
+    galeri: ["assets/img/sajadah-tasbih-b.jpg", "assets/img/sajadah-tasbih-c.jpg"],
     rating: 4.9, terjual: "260+", badge: "Terlaris",
     varian: ["Motif Masjid", "Motif Bunga", "Polos Cream"],
     deskripsi: "Sajadah bulu halus dengan busa tipis, tidak sakit saat dipakai di lantai keras. Bonus tasbih kayu 33 butir dengan tali rapi."
@@ -92,6 +99,7 @@ window.SA_DATA = {
   {
     id: "ihram-sabuk", nama: "Kain Ihram + Sabuk Haji Pria", kategori: "haji",
     harga: 150000, hargaCoret: 0, gambar: "assets/img/hero.jpg",
+    galeri: ["assets/img/ihram-sabuk-b.jpg", "assets/img/ihram-sabuk-c.jpg"],
     rating: 4.8, terjual: "110+", badge: "",
     varian: ["Standar", "Jumbo"],
     deskripsi: "Kain ihram katun tebal nyaman dipakai, dilengkapi sabuk/kantong uang haji anti air. Aman untuk menyimpan uang, kartu, dan dokumen penting."
@@ -100,6 +108,7 @@ window.SA_DATA = {
   {
     id: "sarung-wadimor", nama: "Sarung Wadimor Katun Premium", kategori: "pakaian",
     harga: 175000, hargaCoret: 215000, gambar: "assets/img/sarung-wadimor.jpg",
+    galeri: ["assets/img/sarung-wadimor-b.jpg", "assets/img/sarung-wadimor-c.jpg"],
     rating: 4.9, terjual: "240+", badge: "Terlaris",
     varian: ["Hijau", "Navy", "Maroon", "Cokelat", "Motif Kotak"],
     deskripsi: "Sarung wadimor katun halus, adem dan tidak licin saat dipakai sholat. Tersedia warna polos dan motif kotak, nyaman untuk harian maupun acara."
@@ -107,6 +116,7 @@ window.SA_DATA = {
   {
     id: "sarung-satin", nama: "Sarung Satin Sutra Motif (Edisi Bagus)", kategori: "pakaian",
     harga: 265000, hargaCoret: 320000, gambar: "assets/img/sarung-satin.jpg",
+    galeri: ["assets/img/sarung-satin-b.webp", "assets/img/sarung-satin-c.jpg"],
     rating: 4.8, terjual: "95+", badge: "Favorit",
     varian: ["Emas Hijau", "Emas Maroon", "Emas Hitam"],
     deskripsi: "Sarung satin mengkilap dengan motif tenun halus, jatuh rapi dan mewah. Pilihan tepat untuk sholat Jumat, kondangan, atau hadiah untuk ayah dan kakek."
@@ -114,6 +124,7 @@ window.SA_DATA = {
   {
     id: "sarung-anak", nama: "Sarung Anak Motif Lucu (Ukuran 3-12 th)", kategori: "pakaian",
     harga: 85000, hargaCoret: 105000, gambar: "assets/img/sarung-anak.jpg",
+    galeri: ["assets/img/sarung-anak-b.jpg", "assets/img/sarung-anak-c.jpg"],
     rating: 4.9, terjual: "160+", badge: "",
     varian: ["Biru", "Kuning", "Mint", "Merah", "Ukuran 3-6 th", "Ukuran 7-12 th"],
     deskripsi: "Sarung anak warna cerah dengan motif lucu, bahan katun lembut tidak panas. Karet pinggang elastis sehingga mudah dipakai anak sendiri."
@@ -123,6 +134,7 @@ window.SA_DATA = {
   {
     id: "sajadah-premium", nama: "Sajadah Bulu Tebal Premium Motif Masjid", kategori: "haji",
     harga: 185000, hargaCoret: 235000, gambar: "assets/img/sajadah-premium.jpg",
+    galeri: ["assets/img/sajadah-premium-b.jpg", "assets/img/sajadah-premium-c.jpg"],
     rating: 4.9, terjual: "180+", badge: "Terlaris",
     varian: ["Hijau Masjid", "Maroon", "Cokelat", "Biru Tua"],
     deskripsi: "Sajadah bulu tebal 1,5 cm dengan busa empuk, tidak sakit saat dipakai di lantai keras. Motif masjid klasik, bagian bawah anti licin."
@@ -130,6 +142,7 @@ window.SA_DATA = {
   {
     id: "sajadah-kado", nama: "Sajadah Kado Set (Sajadah + Tasbih + Al-Qur'an)", kategori: "haji",
     harga: 275000, hargaCoret: 340000, gambar: "assets/img/sajadah-kado.jpg",
+    galeri: ["assets/img/sajadah-kado-b.jpg", "assets/img/sajadah-kado-c.webp"],
     rating: 5.0, terjual: "120+", badge: "Paling Hemat",
     varian: ["Dusty Rose", "Cream", "Hijau"],
     deskripsi: "Paket kado cantik: sajadah bulu halus, tasbih, dan Al-Qur'an kecil dalam kotak dengan pita. Siap diberikan untuk walimah, kelahiran, atau hadiah untuk orang tua."
@@ -139,6 +152,7 @@ window.SA_DATA = {
   {
     id: "mukena-premium", nama: "Mukena Katun Jepang Premium (Bukan Travel)", kategori: "pakaian",
     harga: 235000, hargaCoret: 295000, gambar: "assets/img/mukena-premium.jpg",
+    galeri: ["assets/img/mukena-premium-b.webp", "assets/img/mukena-premium-c.jpg"],
     rating: 4.9, terjual: "150+", badge: "Terlaris",
     varian: ["Putih", "Cream", "Dusty Pink", "Hijau Mint"],
     deskripsi: "Mukena katun jepang tebal dan adem, dengan renda halus serta bordir rapi. Potongan panjang dan lebar, nyaman untuk sholat di rumah maupun di masjid."
@@ -146,6 +160,7 @@ window.SA_DATA = {
   {
     id: "mukena-anak", nama: "Mukena Anak Motif Bunga (3-12 th)", kategori: "pakaian",
     harga: 145000, hargaCoret: 175000, gambar: "assets/img/mukena-anak.jpg",
+    galeri: ["assets/img/mukena-anak-b.jpg", "assets/img/mukena-anak-c.jpg"],
     rating: 4.8, terjual: "110+", badge: "",
     varian: ["Pink", "Mint", "Ungu", "Biru"],
     deskripsi: "Mukena anak warna pastel dengan bordir bunga kecil, bahan katun lembut. Ringan dipakai anak dan mudah dibawa ke masjid atau mengaji."
@@ -155,6 +170,7 @@ window.SA_DATA = {
   {
     id: "hijab-instan", nama: "Hijab Instan Jersey Premium (Bergo)", kategori: "pakaian",
     harga: 55000, hargaCoret: 75000, gambar: "assets/img/hijab-instan.jpg",
+    galeri: ["assets/img/hijab-instan-b.jpg", "assets/img/hijab-instan-c.jpg"],
     rating: 4.9, terjual: "380+", badge: "Terlaris",
     varian: ["Cream", "Dusty Rose", "Hitam", "Abu", "Navy"],
     deskripsi: "Hijab instan bahan jersey adem, langsung pakai tanpa peniti dan tidak mudah melorot. Cocok untuk kerja, kuliah, dan aktivitas harian."
@@ -162,6 +178,7 @@ window.SA_DATA = {
   {
     id: "hijab-voal", nama: "Hijab Segi Empat Voal Motif Bunga", kategori: "pakaian",
     harga: 65000, hargaCoret: 85000, gambar: "assets/img/hijab-voal.jpg",
+    galeri: ["assets/img/hijab-voal-b.jpg", "assets/img/hijab-voal-c.jpg"],
     rating: 4.8, terjual: "290+", badge: "Promo",
     varian: ["Dusty Blue", "Cream", "Mauve", "Sage"],
     deskripsi: "Hijab voal segi empat dengan motif bunga halus dan jahitan tepi rapi (baby seam). Tidak menerawang, mudah dibentuk, nyaman dipakai seharian."
@@ -170,6 +187,7 @@ window.SA_DATA = {
   {
     id: "parfum-oud", nama: "Parfum Arab Oud Al-Layl 50 ml", kategori: "parfum",
     harga: 185000, hargaCoret: 225000, gambar: "assets/img/parfum-arab.jpg",
+    galeri: ["assets/img/parfum-oud-b.jpg", "assets/img/parfum-oud-c.jpg"],
     rating: 4.9, terjual: "230+", badge: "Favorit",
     varian: ["Oud", "Musk", "Amber"],
     deskripsi: "Parfum arab konsentrat tinggi (tanpa alkohol), aroma oud hangat dan tahan lama sampai seharian. Botol kaca mewah, cocok untuk hadiah."
@@ -177,6 +195,7 @@ window.SA_DATA = {
   {
     id: "rollon-6in1", nama: "Minyak Wangi Roll-On Series 6 in 1", kategori: "parfum",
     harga: 75000, hargaCoret: 95000, gambar: "assets/img/parfum-rollon.jpg",
+    galeri: ["assets/img/rollon-6in1-b.jpg", "assets/img/rollon-6in1-c.webp"],
     rating: 4.8, terjual: "410+", badge: "Terlaris",
     varian: ["Isi 6 botol (mix aroma)"],
     deskripsi: "Minyak wangi roll-on praktis dibawa di tas atau kantong. Enam pilihan aroma: bunga, musk, oud, vanila, melati, dan sandalwood. Bebas alkohol."
@@ -184,6 +203,7 @@ window.SA_DATA = {
   {
     id: "parfum-musk", nama: "Parfum Al-Rehab Floral Musk", kategori: "parfum",
     harga: 65000, hargaCoret: 0, gambar: "assets/img/parfum-rollon.jpg",
+    galeri: ["assets/img/parfum-musk-b.jpg", "assets/img/parfum-musk-c.jpg"],
     rating: 4.7, terjual: "190+", badge: "",
     varian: ["Floral", "Musk Putih", "Rose"],
     deskripsi: "Aroma lembut floral-musk yang tidak menyengat, disukai banyak pengguna parfum arab. Cocok untuk aktivitas harian dan setelah sholat."
@@ -191,6 +211,7 @@ window.SA_DATA = {
   {
     id: "bakhoor", nama: "Bakhoor / Dupa Arab Premium", kategori: "parfum",
     harga: 55000, hargaCoret: 0, gambar: "assets/img/parfum-arab.jpg",
+    galeri: ["assets/img/bakhoor-b.webp", "assets/img/bakhoor-c.webp"],
     rating: 4.8, terjual: "150+", badge: "",
     varian: ["50 gr", "100 gr"],
     deskripsi: "Wewangian kayu gaharu khas Timur Tengah untuk mengharumkan rumah, ruang tamu, atau kamar. Wangi menenangkan, tahan lama, tanpa bau terbakar."
@@ -198,6 +219,7 @@ window.SA_DATA = {
   {
     id: "skincare-glow", nama: "Paket Skincare Glow + Body Lotion", kategori: "kosmetik",
     harga: 145000, hargaCoret: 189000, gambar: "assets/img/skincare.jpg",
+    galeri: ["assets/img/skincare-glow-b.jpg", "assets/img/skincare-glow-c.jpg"],
     rating: 4.9, terjual: "280+", badge: "Promo",
     varian: ["Kulit Normal", "Kulit Kering", "Kulit Berminyak"],
     deskripsi: "Paket hemat: serum pencerah, pelembap, dan body lotion. Tekstur ringan, cepat meresap, membantu kulit tampak lebih cerah dan lembut setelah pemakaian rutin."
@@ -205,6 +227,7 @@ window.SA_DATA = {
   {
     id: "handbody-spf", nama: "Hand & Body Lotion SPF 30", kategori: "kosmetik",
     harga: 48000, hargaCoret: 0, gambar: "assets/img/skincare.jpg",
+    galeri: ["assets/img/handbody-spf-b.jpg", "assets/img/handbody-spf-c.jpg"],
     rating: 4.8, terjual: "350+", badge: "",
     varian: ["250 ml", "500 ml"],
     deskripsi: "Losion badan dengan perlindungan SPF 30, membantu menjaga kulit tetap lembap dan melindungi dari sinar matahari saat beraktivitas di luar ruangan."
@@ -212,6 +235,7 @@ window.SA_DATA = {
   {
     id: "lulur-kopi", nama: "Lulur & Body Scrub Kopi Arabika", kategori: "kosmetik",
     harga: 45000, hargaCoret: 0, gambar: "assets/img/skincare.jpg",
+    galeri: ["assets/img/lulur-kopi-b.jpg", "assets/img/lulur-kopi-c.webp"],
     rating: 4.7, terjual: "170+", badge: "",
     varian: ["250 gr"],
     deskripsi: "Scrub alami dari kopi arabika dan madu untuk mengangkat sel kulit mati. Dipakai 2x seminggu, kulit terasa lebih halus dan segar."
@@ -219,6 +243,7 @@ window.SA_DATA = {
   {
     id: "gift-set-bodycare", nama: "Body Care Gift Set (Kado Cantik)", kategori: "kosmetik",
     harga: 110000, hargaCoret: 140000, gambar: "assets/img/skincare.jpg",
+    galeri: ["assets/img/gift-set-bodycare-b.jpg", "assets/img/gift-set-bodycare-c.png"],
     rating: 4.9, terjual: "85+", badge: "Baru",
     varian: ["Blush", "Cream", "Mix"],
     deskripsi: "Paket kado berisi sabun, body butter, dan scrub kecil dalam kotak cantik. Cocok untuk hadiah ulang tahun, hantaran, atau seserahan ibu."
