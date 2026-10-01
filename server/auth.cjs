@@ -116,6 +116,10 @@ function createHandler(options = {}) {
   // Best effort per warm function, not a distributed/global rate limiter.
   // A strong password is mandatory; Vercel WAF rate limiting is recommended as another layer.
   const attempts = new Map();
+  // Cookies are stateless, so "Keluar" cannot recall a token by itself. A warm instance
+  // therefore remembers logged-out session ids until they expire (best effort per
+  // instance, same trade-off as the rate limiter above).
+  const revoked = new Map();
   function settings() {
     const password = env.ADMIN_PASSWORD || '';
     if (typeof password !== 'string' || password.length < 16 || password.length > 512) return null;
@@ -134,7 +138,9 @@ function createHandler(options = {}) {
     try {
       const s = JSON.parse(Buffer.from(pieces[0], 'base64url').toString('utf8'));
       const t = Math.floor(now()/1000);
-      if (s.v !== 1 || s.aud !== host || !Number.isInteger(s.iat) || !Number.isInteger(s.exp) || s.iat > t + 30 || s.exp <= t || s.exp - s.iat !== SESSION_SECONDS || !/^[a-f0-9]{48}$/.test(s.csrf || '')) return null;
+      if (s.v !== 1 || s.aud !== host || !Number.isInteger(s.iat) || !Number.isInteger(s.exp) || s.iat > t + 30 || s.exp <= t || s.exp - s.iat !== SESSION_SECONDS || !/^[a-f0-9]{48}$/.test(s.csrf || '') || !/^[a-f0-9]{24}$/.test(s.jti || '')) return null;
+      if (revoked.get(s.jti) === s.exp) return null;
+      if (revoked.size > 200) { for (const [id, exp] of revoked) if (exp <= t) revoked.delete(id); }
       return s;
     } catch { return null; }
   }
@@ -196,7 +202,7 @@ function createHandler(options = {}) {
         }
         attempts.delete(ip);
         const iat = Math.floor(t/1000);
-        const payload = Buffer.from(JSON.stringify({v:1,iat,exp:iat+SESSION_SECONDS,aud:host,csrf:crypto.randomBytes(24).toString('hex')})).toString('base64url');
+        const payload = Buffer.from(JSON.stringify({v:1,iat,exp:iat+SESSION_SECONDS,aud:host,csrf:crypto.randomBytes(24).toString('hex'),jti:crypto.randomBytes(12).toString('hex')})).toString('base64url');
         setCookie(res,SID,payload+'.'+mac(payload,cfg.signingKey),SESSION_SECONDS);
         setCookie(res,LOGIN_CSRF,'',0);
         return redirect(res,'/admin');
@@ -211,6 +217,7 @@ function createHandler(options = {}) {
         const input = await readBody(req,4096);
         const form = input.value || Object.fromEntries(new URLSearchParams(input.raw));
         if (s && (typeof form.csrf !== 'string' || !equal(form.csrf,s.csrf))) return json(res,403,{message:'Permintaan keluar tidak valid.'});
+        if (s && s.jti) revoked.set(s.jti, s.exp);
         setCookie(res,SID,'',0);setCookie(res,LOGIN_CSRF,'',0);
         return redirect(res,'/admin');
       }

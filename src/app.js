@@ -3,7 +3,7 @@
    ---------------------------------------------------------------------
    ISI WEBSITE (profil, produk, jasa, testimoni, FAQ) tidak lagi ditulis di
    sini, melainkan di berkas "data.js" — dan paling mudah diubah lewat
-   halaman "admin.html" (panel admin) tanpa menyentuh kode sama sekali.
+   halaman panel admin https://sentot.my.id/admin (butuh password) tanpa menyentuh kode.
    ===================================================================== */
 
 /* Data yang dipakai website:

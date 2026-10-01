@@ -1,78 +1,88 @@
-# Website SENTOT AI × SC (Sofia Collection)
+# Website SENTOT AI × SOFIA COLLECTION — dengan panel admin berpassword
 
-Website toko + layanan jasa dalam satu halaman:
+Toko + layanan jasa satu halaman, plus panel pengelola yang **terkunci password di server**.
 
-- **SC — Sofia Collection:** pakaian muslim, perlengkapan haji & umroh, minyak wangi/parfum, kosmetik & perawatan tubuh.
-- **SENTOT AI:** pembuatan website, desain logo & konten, titip beli & antar barang, antar dokumen, tenaga bantu harian.
+- Toko: https://sentot.my.id
+- Panel admin: https://sentot.my.id/admin ← halaman login
+- Kontak: WhatsApp **088214949749** · Email **sentotanis@gmail.com** · BCA **1520514216** a/n Sentot Anis Irwan
 
-Fitur: katalog + pencarian + filter kategori, keranjang belanja (tersimpan di HP pembeli), **checkout otomatis jadi pesan WhatsApp**, testimoni, FAQ, dan halaman admin untuk mengedit seluruh isi tanpa kode.
+Panel lama (`panel-sentot-2026.html`, `admin.html`) kini hanya **pengalih** ke `/admin`. Berkas editor terbuka
+tidak ada lagi di repo — dulu panel itu bisa dibuka siapa pun tanpa password, sekarang tidak.
 
-Kontak yang sudah terpasang: WhatsApp **088214949749** · Email **sentotanis@gmail.com** · **BCA 1520514216 a/n Sentot Anis Irwan**
+> **Satu hal yang hanya bisa Anda lakukan:** mengisi `ADMIN_PASSWORD` di Vercel (bagian 1 di bawah).
+> Tanpa itu, `/admin` menolak semua orang — termasuk Anda — jadi tidak ada password bawaan yang perlu dicari.
 
 ---
 
-## Isi repositori ini
+## 1. Menyetel password (satu kali, ±2 menit)
+
+Password **tidak disimpan di GitHub** (repo ini publik) — ia berada di Environment Variables Vercel,
+dan diperiksa hanya di server.
+
+1. Buka **vercel.com** → pilih project `website-sentotai`.
+2. **Settings → Environment Variables → Production** → Add New:
+   - Key: `ADMIN_PASSWORD`
+   - Value: password buatan Anda sendiri, minimal **16** karakter. Pakai 4–5 kata tak berhubungan
+     + angka (contoh bentuk: `kata-kata-kata-kata-kata-123`), jangan contoh ini dan jangan password
+     yang dipakai di tempat lain. Jangan taruh password di berkas mana pun di repo ini.
+   - Key: `GITHUB_TOKEN` *(opsional, perlu untuk tombol Terbitkan/Kirim ke GitHub)* —
+     fine-grained token, akses **hanya repo ini**, izin **Contents: Read and write**.
+3. **Deployments → ⋯ → Redeploy** (env baru hanya aktif setelah deploy ulang).
+4. Buka https://sentot.my.id/admin → masuk dengan password → panel terbuka.
+
+**Belum menyetel `ADMIN_PASSWORD`?** Aman: `/admin` menjawab `503` dengan pesan penuntun, form login
+disembunyikan, dan proxy GitHub tertutup. Panel gagal-tertutup (*fail-closed*), tidak pernah terbuka diam-diam.
+
+Ganti password kapan saja: ubah `ADMIN_PASSWORD` → Redeploy. Sesi lama ikut hangus (kunci sesi dibuat ulang tiap
+deploy, dan ditambatkan ke password).
+
+## 2. Isi repository
 
 | Berkas / folder | Keterangan |
 |---|---|
-| `index.html` | Halaman utama website |
-| `src/data.js` | **Semua isi website** (profil, produk, jasa, testimoni, FAQ) |
-| `src/app.js` | Logika website (keranjang, checkout WhatsApp, filter) |
-| `src/styles.css` | Tampilan/warna (hijau–emas + rose gold) |
-| `assets/img/`, `assets/logo-sc.jpg` | Foto produk & logo SC |
-| `vercel.json` | Pengaturan singkat untuk Vercel (pengaturan cache gambar) |
+| `index.html`, `src/{data,app,styles}.*`, `assets/` | Toko publik. Konten tetap diedit lewat panel |
+| `api/admin.js` | Titik masuk Vercel Function (login, logout, sesi, panel, proxy GitHub) |
+| `server/auth.cjs` | Password, sesi, CSRF, rate limit, penyaring operasi GitHub |
+| `server/login.html` | Tampilan login |
+| `server/panel-template.json` | Antarmuka panel — **bukan** kredensial, tidak ikut output publik |
+| `server/panel-redirect.html` | Isi pengalih untuk alamat panel lama |
+| `scripts/vercel-build.cjs` | Build: salin hanya storefront ke `public/`, buat kunci sesi acak di `.server/` |
+| `scripts/test-auth.cjs` | Uji keamanan mandiri (18 pemeriksaan) |
+| `vercel.json` | Root directory repo ini; rewrite `/admin` → function; header cache |
 
-> **Catatan:** panel admin (`admin.html`) **sengaja tidak diunggah** ke repositori ini — ia disimpan di perangkat pemilik saja. Repositori ini hanya berisi website yang dilihat pengunjung.
+## 3. Cara memakai panel
 
----
+Isi website disimpan di `src/data.js`. Panel memuat data terbit terbaru, memakai draft perangkat ini bila lebih baru.
+Setelah selesai: **Terbitkan** (lewat proxy GitHub, hanya branch `main`) → Vercel memperbarui ±1 menit → lalu **Keluar**.
+Sesi berlaku 1 jam. Cadangan: **🗄 Unduh cadangan data (JSON)**; pulihkan lewat **📥 Pulihkan dari cadangan**.
 
-## Cara mengubah isi website (tanpa kode)
+## 4. Yang dijaga server
 
-1. Buka berkas **`admin.html`** di peramban Anda (berkas ini ada di perangkat Anda, tidak di repositori ini).
-2. Edit isinya di tab: Profil Usaha, Produk, Layanan Jasa, Testimoni, FAQ.
-3. Buka tab **☁ GitHub & Vercel** → klik **Kirim ke GitHub**.
-4. Vercel akan memperbarui website dalam ± 1 menit. Selesai — tanpa mengunggah berkas manual.
+- Password diperiksa di server saja; tidak ada kata kunci di berkas publik maupun di riwayat commit.
+- Sesi: cookie HMAC `__Host-` — **HttpOnly + Secure + SameSite=Strict**, TTL 1 jam, terikat ke domain,
+  ada `jti` yang dicabut saat **Keluar**; penandatanganan memakai kunci acak per-deployment.
+- Setiap perubahan butuh Origin sesame + token CSRF; token GitHub **tidak pernah** dikirim ke browser.
+- Login dibatasi 5 percobaan / 15 menit per IP per instance (`Retry-After`), jeda 400 ms.
+- Proxy GitHub hanya untuk repo `sentotanis-glitch/website-sentotai` branch `main`, hanya berkas
+  `index.html`, `src/*`, `assets/**`: force push, penulisan `server/`, `api/`, `.env` ditolak.
+- Respons admin: `no-store`, `X-Frame-Options: DENY`, CSP `frame-ancestors 'none'`, `noindex`.
 
-Berkas `admin.html` Anda simpan di perangkat sendiri (tidak perlu dionlinekan). Setiap kiriman tersimpan sebagai versi baru di GitHub, jadi **cadangan Anda otomatis dan bisa dikembalikan ke versi lama kapan saja** (lihat tab *Commits* di repositori).
+Uji lokal sebelum terbit (tanpa jaringan, tanpa kredensial nyata):
 
-### Panduan sekali saja: menyiapkan GitHub + Vercel (gratis)
+```bash
+ADMIN_PASSWORD='password-uji-anda-1234567890' node scripts/test-auth.cjs   # buat public/ + 18 uji
+```
 
-**A. Repositori GitHub**
-1. Buat akun di **github.com** (gratis).
-2. Klik **+** kanan atas → **New repository** → nama mis. `website-sentot` → pilih **Private** (aman) → centang **Add a README file** → **Create repository**.
-3. Unggah berkas dari folder ini: **Add file → Upload files** → seret semua berkas & folder di sini → **Commit changes**.
+`public/`, `.server/`, `.env*` sudah di-`.gitignore` — jangan pernah diunggah.
 
-**B. Token akses (kunci khusus panel)**
-1. GitHub → foto profil → **Settings** → **Developer settings** → **Personal access tokens** → **Fine-grained tokens** → **Generate new token**.
-2. Nama: mis. `panel-website`. Masa berlaku: 1 tahun (atau sesuka Anda).
-3. **Repository access:** Only select repositories → pilih repo `website-sentot`.
-4. **Permissions → Repository permissions → Contents → Read and write**.
-5. **Generate token** → salin token → tempel di tab **☁ GitHub & Vercel** pada panel → **Simpan Pengaturan** → **Uji Koneksi**.
+## 5. Riwayat lama & GitHub Pages
 
-**C. Vercel (agar website mengudara otomatis)**
-1. Buka **vercel.com** → **Sign up** → **Continue with GitHub** (gratis, tanpa kartu kredit).
-2. **Add New… → Project** → pilih repo `website-sentot` → **Import**.
-3. Framework Preset: **Other**. Build Command & Output Directory: **biarkan kosong**. Klik **Deploy**.
-4. Website online di alamat seperti `website-sentot.vercel.app`. Bisa diganti dengan domain sendiri (mis. `sentotai.id`) di menu **Settings → Domains**.
+Berkas panel terbuka lama masih terbaca di riwayat commit repo publik ini, tetapi isinya hanya antarmuka editor:
+tidak ada password dan tidak ada token (token dulu tersimpan di browser pemilik, bukan di berkas).
+Bila suatu ketika Anda pernah menempel token di panel lama, **cabut token itu** di GitHub
+(Developer settings → token → Revoke) dan buat baru.
 
-**Alternatif tanpa Vercel — GitHub Pages (gratis juga):**
-Repositori → **Settings → Pages** → Source: **Deploy from a branch** → pilih cabang **main**, folder **/(root)** → **Save**.
-Website aktif di `nama-pengguna.github.io/nama-repo` (biasanya dalam 1–2 menit).
-
----
-
-## Keamanan token
-
-- Token hanya tersimpan di perangkat Anda (tidak ikut terunggah ke website).
-- Jangan bagikan token ke siapa pun. Bila ragu, cabut di GitHub (**Developer settings → token → Revoke**), lalu buat yang baru.
-- Gunakan token dengan izin **hanya satu repo** dan hanya **Contents: Read and write**.
-
----
-
-## Cadangan data (tambahan)
-
-Selain riwayat GitHub, di panel ada **🗄 Unduh cadangan data (JSON)**. Simpan berkas itu ke tempat aman (Google Drive/WhatsApp diri sendiri). Berkas cadangan bisa dimuat kembali lewat **📥 Pulihkan dari cadangan** — berguna bila ganti perangkat.
-
----
-
-Semoga berkah dan lancar 🤍
+GitHub Pages **tidak** menjalankan Node.js, jadi di sana `/admin` tidak bisa login — halaman pengalih mengarah ke
+`https://sentot.my.id/admin`. Jangan mengunggah panel luring (`admin.html` versi editor) ke hosting mana pun.
+Setelah login aktif, tinjau deployment Vercel lama yang masih menayangkan editor terbuka: hapus yang tidak dipakai,
+jangan hapus Production aktif.
