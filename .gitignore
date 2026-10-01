@@ -1,6 +1,16 @@
 # berkas yang tidak perlu ikut ke GitHub
 cadangan-data/
 panel-admin.html
+panel-admin-*.html
 *.zip
 .DS_Store
 Thumbs.db
+
+# hasil build Vercel & rahasia lokal — JANGAN PERNAH di-commit
+public/
+.server/
+.vercel/
+.env
+.env.*
+*.local
+node_modules/

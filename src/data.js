@@ -3,8 +3,8 @@
    ---------------------------------------------------------------------
    Berkas ini berisi SEMUA isi website: profil usaha, produk, layanan jasa,
    testimoni, dan FAQ.
-   Cara paling mudah mengeditnya: buka "admin.html" di browser, ubah lewat
-   tampilan yang sudah tersedia, lalu klik "Simpan" / "Unduh index.html".
+   Cara paling mudah mengeditnya: buka https://sentot.my.id/admin (login pakai
+   password), ubah lewat tampilan yang tersedia, lalu klik "Terbitkan".
    (Mengedit berkas ini langsung juga boleh, tapi lebih rawan salah ketik.)
    ===================================================================== */
 window.SA_DATA = {
