@@ -51,6 +51,7 @@ deploy, dan ditambatkan ke password).
 | `server/panel-redirect.html` | Isi pengalih untuk alamat panel lama |
 | `scripts/vercel-build.cjs` | Build: salin hanya storefront ke `public/`, buat kunci sesi acak di `.server/` |
 | `scripts/test-auth.cjs` | Uji keamanan mandiri (19 pemeriksaan) |
+| `scripts/sync-panel.cjs` | Menyalin ulang `index.html`/`src/app.js`/`src/styles.css` ke dalam `server/panel-template.json` — jalankan tiap kali storefront diubah agar "Terbitkan" tidak mengirim versi basi |
 | `vercel.json` | Root directory repo ini; rewrite `/admin` → function; header cache |
 
 ## 3. Cara memakai panel

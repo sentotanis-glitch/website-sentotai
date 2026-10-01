@@ -174,6 +174,10 @@ function produkTersaring() {
 
 const namaKategori = id => (KATEGORI.find(k => k.id === id) || {}).nama || "";
 
+/* Daftar foto sebuah produk: foto utama (gambar) + foto tambahan (galeri),
+   tanpa duplikat. Dipakai kartu katalog (penanda jumlah) & modal detail. */
+const fotoProduk = p => [p.gambar, ...(p.galeri || [])].filter((x, i, a) => x && a.indexOf(x) === i);
+
 function renderProduk() {
   const list = produkTersaring();
   const grid = $("#grid");
@@ -189,8 +193,10 @@ function renderProduk() {
     const badge = p.badge ? `<span class="badge ${p.badge === "Promo" ? "gold" : (p.badge === "Terlaris" || p.badge === "Best Seller" ? "" : "green")}">${esc(p.badge)}</span>` : "";
     const old = p.hargaCoret ? `<span class="price-old">${rupiah(p.hargaCoret)}</span>` : "";
     const hemat = p.hargaCoret ? `<span style="font-size:.74rem;color:var(--rose-600);font-weight:700">Hemat ${rupiah(p.hargaCoret - p.harga)}</span>` : "";
+    const foto = fotoProduk(p);
+    const chipFoto = foto.length > 1 ? `<span class="foto-count" title="${foto.length} foto produk">📷 ${foto.length}</span>` : "";
     return `<article class="card">
-      <div class="card-media" data-detail="${p.id}">${badge}<img src="${p.gambar}" alt="${esc(p.nama)}" loading="lazy"></div>
+      <div class="card-media" data-detail="${p.id}">${badge}${chipFoto}<img src="${p.gambar}" alt="${esc(p.nama)}" loading="lazy"></div>
       <div class="card-body">
         <div class="card-cat">${esc(namaKategori(p.kategori))}</div>
         <h3>${esc(p.nama)}</h3>
@@ -312,8 +318,12 @@ const tutupDrawer = () => { $("#drawer").classList.remove("show"); $("#overlay")
 function bukaDetail(id) {
   const p = PRODUK.find(x => x.id === id);
   if (!p) return;
+  const foto = fotoProduk(p);
+  const galeriHtml = foto.length > 1 ? `<div class="detail-galeri" aria-label="Galeri foto produk">${
+    foto.map((g, i) => `<button type="button" class="${i === 0 ? "on" : ""}" data-gf="${g}" aria-label="Lihat foto ${i + 1}"><img src="${g}" alt="" loading="lazy"></button>`).join("")
+  }</div>` : "";
   $("#detailBody").innerHTML = `<div class="detail-grid">
-    <div><img src="${p.gambar}" alt="${esc(p.nama)}"></div>
+    <div><img id="dFoto" src="${foto[0]}" alt="${esc(p.nama)}">${galeriHtml}</div>
     <div>
       <div class="card-cat">${esc(namaKategori(p.kategori))}</div>
       <h2 style="font-size:1.4rem;margin-bottom:6px">${esc(p.nama)}</h2>
@@ -333,6 +343,11 @@ function bukaDetail(id) {
       </div>
       <button class="btn btn-outline btn-block" style="margin-top:10px" id="dWa">${svg("wa", 16)} Tanya stok &amp; varian via WhatsApp</button>
     </div></div>`;
+
+  $$("#detailBody .detail-galeri [data-gf]").forEach(b => b.addEventListener("click", () => {
+    $("#dFoto").src = b.dataset.gf;
+    $$("#detailBody .detail-galeri [data-gf]").forEach(x => x.classList.toggle("on", x === b));
+  }));
 
   let q = 1;
   $("#dqMinus").addEventListener("click", () => { q = Math.max(1, q - 1); $("#dqv").textContent = q; });
