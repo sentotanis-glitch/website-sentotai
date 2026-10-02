@@ -37,11 +37,36 @@ disembunyikan, dan proxy GitHub tertutup. Panel gagal-tertutup (*fail-closed*), 
 Ganti password kapan saja: ubah `ADMIN_PASSWORD` → Redeploy. Sesi lama ikut hangus (kunci sesi dibuat ulang tiap
 deploy, dan ditambatkan ke password).
 
+## 1b. Produk dari tokocicha.my.id (ditambahkan 2 Oktober 2026)
+
+Katalog Sofia Collection kini juga memuat **13 barang dagangan Candraningrum** (tokocicha.my.id) — hanya barang
+yang memang dijual, sedangkan halaman lain di situs itu (profil pemilik, artikel, jasa titip beli, dan keagenan
+VMA/Bumida) **tidak** dipindahkan, sesuai permintaan. Yang masuk:
+
+| Kategori baru di website | Isi |
+|---|---|
+| **Skincare & Kecantikan** (5) | Misschique Encapsulated Retinol Serum, Misschique Peeling Serum, ICHIBOSS Papaya Brightening Soap, ICHIBOSS Tea Tree Acne Care Soap, Bavvoc Lumi Veil |
+| **Perawatan Kewanitaan** (4) | Bavvoc Feminine Spray (Bubble Gum / Strawberry / Vanilla), Bavvoc Pure Essence Feminine Wash |
+| **Rumah Tangga** (4) | ÓPTIMO+ Toilet Cleaner, ÓPTIMO+ Oxi-Bleach, ÓPTIMO+ Multi Spray Perfume, ÓPTIMO+ Multi Cleaner |
+
+Catatan kecil:
+
+- Harga, ukuran, dan keterangan disalin dari situs sumber saat pengambilan foto (2 Okt 2026). Bavvoc Lumi Veil
+  belum punya harga di situs sumber — di website tampil **"Tanya harga"** dan tetap bisa masuk keranjang.
+- Foto disimpan di `assets/img/cicha/` (berkas biasa, bukan tautan ke situs lain).
+- Pesanan produk baru ini tetap masuk ke WhatsApp **088214949749** (nomor toko ini). Bila ingin dialihkan ke
+  WhatsApp Cicha (0882 1749 3669), ubah lewat panel admin → Profil, atau minta perubahan di repo ini.
+- Ubah/hapus/menambah produk berikutnya: lewat panel admin `https://sentot.my.id/admin` → tab Produk.
+- Skrip sekali pakai yang dipakai untuk memasukkan semuanya: `node scripts/pasang-produk-cicha.cjs`
+  (setelahnya wajib `node scripts/sync-panel.cjs`, lalu `ADMIN_PASSWORD='...' node scripts/test-auth.cjs`).
+
 ## 2. Isi repository
 
 | Berkas / folder | Keterangan |
 |---|---|
 | `index.html`, `src/{data,app,styles}.*`, `assets/` | Toko publik. Konten tetap diedit lewat panel |
+| `assets/img/cicha/` | 13 foto produk dari tokocicha.my.id (bagian 1b) |
+| `scripts/pasang-produk-cicha.cjs` | Skrip sekali pakai: memasukkan produk Cicha + merapikan `index.html` dari sumber `src/` |
 | `assets/logo-sc.jpg` | Logo Sofia Collection, **800×800 (persegi)** — tampil 96×96 px di kartu brand |
 | `assets/foto-sentot.jpg` | Foto Anda untuk kartu **SENTOT AI** (persegi, min. 400×400). Belum ada? Slot otomatis menampilkan monogram "S" dengan lencana **SAI** tetap di pojoknya |
 | `api/admin.js` | Titik masuk Vercel Function (login, logout, sesi, panel, proxy GitHub) |

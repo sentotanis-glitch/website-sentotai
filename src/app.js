@@ -38,6 +38,11 @@ function muatData() {
 const $  = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 const rupiah = n => "Rp" + Math.round(n).toLocaleString("id-ID");
+const hargaTeks = p => (Number(p.harga) > 0 ? rupiah(p.harga) : "Tanya harga");
+/* Baris rating hanya tampil bila datanya ada — produk yang baru ditambahkan belum punya angka penjualan. */
+const rateHtml = p => (p.rating || p.terjual)
+  ? `<div class="rate"><span class="stars">★★★★★</span> ${p.rating ? p.rating : ""}${p.rating && p.terjual ? " · " : ""}${p.terjual ? esc(p.terjual) + " terjual" : ""}</div>`
+  : "";
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 
 const storage = (() => {
@@ -164,10 +169,10 @@ function produkTersaring() {
     const q = kataKunci.toLowerCase();
     list = list.filter(p => (p.nama + " " + p.deskripsi + " " + p.kategori).toLowerCase().includes(q));
   }
-  const harga = p => p.harga;
+  const harga = p => (p.harga > 0 ? p.harga : Infinity);
   if (urutkan === "murah") list.sort((a, b) => harga(a) - harga(b));
   if (urutkan === "mahal") list.sort((a, b) => harga(b) - harga(a));
-  if (urutkan === "populer") list.sort((a, b) => parseFloat(b.terjual) - parseFloat(a.terjual));
+  if (urutkan === "populer") list.sort((a, b) => (parseFloat(b.terjual) || 0) - (parseFloat(a.terjual) || 0));
   if (urutkan === "baru") list.sort((a, b) => (b.badge === "Baru" ? 1 : 0) - (a.badge === "Baru" ? 1 : 0));
   return list;
 }
@@ -191,8 +196,8 @@ function renderProduk() {
   }
   grid.innerHTML = list.map(p => {
     const badge = p.badge ? `<span class="badge ${p.badge === "Promo" ? "gold" : (p.badge === "Terlaris" || p.badge === "Best Seller" ? "" : "green")}">${esc(p.badge)}</span>` : "";
-    const old = p.hargaCoret ? `<span class="price-old">${rupiah(p.hargaCoret)}</span>` : "";
-    const hemat = p.hargaCoret ? `<span style="font-size:.74rem;color:var(--rose-600);font-weight:700">Hemat ${rupiah(p.hargaCoret - p.harga)}</span>` : "";
+    const old = p.hargaCoret && p.harga > 0 ? `<span class="price-old">${rupiah(p.hargaCoret)}</span>` : "";
+    const hemat = p.hargaCoret && p.harga > 0 ? `<span style="font-size:.74rem;color:var(--rose-600);font-weight:700">Hemat ${rupiah(p.hargaCoret - p.harga)}</span>` : "";
     const foto = fotoProduk(p);
     const chipFoto = foto.length > 1 ? `<span class="foto-count" title="${foto.length} foto produk">📷 ${foto.length}</span>` : "";
     return `<article class="card">
@@ -201,8 +206,8 @@ function renderProduk() {
         <div class="card-cat">${esc(namaKategori(p.kategori))}</div>
         <h3>${esc(p.nama)}</h3>
         <p class="card-desc">${esc(p.deskripsi)}</p>
-        <div class="rate"><span class="stars">★★★★★</span> ${p.rating} · ${esc(p.terjual)} terjual</div>
-        <div class="price-row"><span class="price">${rupiah(p.harga)}</span>${old}</div>
+        ${rateHtml(p)}
+        <div class="price-row"><span class="price">${hargaTeks(p)}</span>${old}</div>
         <div style="margin-top:2px">${hemat}</div>
         <div class="card-actions">
           <button class="btn btn-primary btn-sm" data-add="${p.id}">${svg("cart", 15)} Keranjang</button>
@@ -215,7 +220,7 @@ function renderProduk() {
   $$("#grid [data-add]").forEach(b => b.addEventListener("click", () => tambah(String(b.dataset.add), 1, true)));
   $$("#grid [data-tanya]").forEach(b => b.addEventListener("click", () => {
     const p = PRODUK.find(x => x.id === b.dataset.tanya);
-    bukaWA(`Assalamualaikum ${PROFIL.brandToko} 🙏\nSaya mau tanya produk ini:\n• ${p.nama}\n• Harga: ${rupiah(p.harga)}\n\nApakah stoknya ready dan bisa kirim ke kota saya?`);
+    bukaWA(`Assalamualaikum ${PROFIL.brandToko} 🙏\nSaya mau tanya produk ini:\n• ${p.nama}\n• Harga: ${p.harga > 0 ? rupiah(p.harga) : "mohon info harga terbaru"}\n\nApakah stoknya ready dan bisa kirim ke kota saya?`);
   }));
   $$("#grid [data-detail]").forEach(m => m.addEventListener("click", () => bukaDetail(String(m.dataset.detail))));
 }
@@ -289,7 +294,7 @@ function renderKeranjang() {
       <img src="${i.gambar}" alt="${esc(i.nama)}">
       <div>
         <h4>${esc(i.nama)}</h4>
-        <div class="cp">${rupiah(i.harga)} <span style="font-weight:400;color:var(--muted);font-size:.78rem">× ${i.qty}</span></div>
+        <div class="cp">${i.harga > 0 ? rupiah(i.harga) : "harga menyusul"} <span style="font-weight:400;color:var(--muted);font-size:.78rem">× ${i.qty}</span></div>
         <div class="qty">
           <button data-qty="${i.id}" data-d="-1" aria-label="kurangi">−</button><span>${i.qty}</span>
           <button data-qty="${i.id}" data-d="1" aria-label="tambah">+</button>
@@ -327,12 +332,12 @@ function bukaDetail(id) {
     <div>
       <div class="card-cat">${esc(namaKategori(p.kategori))}</div>
       <h2 style="font-size:1.4rem;margin-bottom:6px">${esc(p.nama)}</h2>
-      <div class="rate"><span class="stars">★★★★★</span> ${p.rating} · ${esc(p.terjual)} terjual</div>
-      <div class="detail-price">${rupiah(p.harga)} ${p.hargaCoret ? `<span class="price-old" style="font-size:.9rem">${rupiah(p.hargaCoret)}</span>` : ""}</div>
+      ${rateHtml(p)}
+      <div class="detail-price">${hargaTeks(p)} ${p.hargaCoret ? `<span class="price-old" style="font-size:.9rem">${rupiah(p.hargaCoret)}</span>` : ""}</div>
       <p style="font-size:.92rem;color:var(--ink-soft)">${esc(p.deskripsi)}</p>
       <div class="detail-meta">
         <div>${svg("check", 16)} Pilihan: ${esc(p.varian.join(", "))}</div>
-        <div>${svg("shield", 16)} Bebas alkohol &amp; dipilih dari supplier terpercaya</div>
+        <div>${svg("shield", 16)} ${p.kategori === "rumahtangga" ? "Aman dipakai sesuai petunjuk &amp; dipilih dari supplier terpercaya" : "Bebas alkohol &amp; dipilih dari supplier terpercaya"}</div>
         <div>${svg("truck", 16)} Dikirim dari ${esc(PROFIL.kota)} · bisa COD &amp; same-day Surabaya</div>
       </div>
       <div class="qtyline"><span class="lbl">Jumlah:</span>
@@ -353,7 +358,7 @@ function bukaDetail(id) {
   $("#dqMinus").addEventListener("click", () => { q = Math.max(1, q - 1); $("#dqv").textContent = q; });
   $("#dqPlus").addEventListener("click", () => { q = Math.min(99, q + 1); $("#dqv").textContent = q; });
   $("#dAdd").addEventListener("click", () => { tambah(p.id, q, true); tutupModal("#detailModal"); bukaDrawer(); });
-  $("#dWa").addEventListener("click", () => bukaWA(`Assalamualaikum ${PROFIL.brandToko} 🙏\nSaya mau tanya produk:\n• ${p.nama}\n• Harga: ${rupiah(p.harga)}\n• Varian: ${p.varian.join(" / ")}\n\nStoknya ready?`));
+  $("#dWa").addEventListener("click", () => bukaWA(`Assalamualaikum ${PROFIL.brandToko} 🙏\nSaya mau tanya produk:\n• ${p.nama}\n• Harga: ${p.harga > 0 ? rupiah(p.harga) : "mohon info harga terbaru"}\n• Varian: ${p.varian.join(" / ")}\n\nStoknya ready?`));
   bukaModal("#detailModal");
 }
 
@@ -368,7 +373,7 @@ function susunPesan() {
   const sub = subtotal();
   const gratis = sub >= PROFIL.gratisOngkirMin;
 
-  const barang = KERANJANG.map((i, n) => `${n + 1}. ${i.nama}\n   ${i.qty} x ${rupiah(i.harga)} = ${rupiah(i.harga * i.qty)}`).join("\n");
+  const barang = KERANJANG.map((i, n) => `${n + 1}. ${i.nama}\n   ${i.qty} x ${i.harga > 0 ? rupiah(i.harga) + " = " + rupiah(i.harga * i.qty) : "(harga menyusul)"}`).join("\n");
   return `Assalamualaikum ${PROFIL.brandJasa} / ${PROFIL.brandToko} 🙏
 Saya mau pesan:
 
