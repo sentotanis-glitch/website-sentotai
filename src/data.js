@@ -8,7 +8,7 @@
    (Mengedit berkas ini langsung juga boleh, tapi lebih rawan salah ketik.)
    ===================================================================== */
 window.SA_DATA = {
-  _t: 1790826458602,   // penanda versi (diisi otomatis oleh build/admin)
+  _t: 1790953337767,   // penanda versi (diisi otomatis oleh build/admin)
 
   PROFIL: {
   brandJasa: "SENTOT AI",              // divisi jasa & teknologi
@@ -36,7 +36,10 @@ window.SA_DATA = {
   { id: "pakaian", nama: "Pakaian Muslim",         ico: "shirt" },
   { id: "haji",    nama: "Perlengkapan Ibadah, Haji & Umroh", ico: "kaaba" },
   { id: "parfum",  nama: "Minyak Wangi & Parfum",  ico: "drop" },
-  { id: "kosmetik",nama: "Kosmetik & Perawatan Tubuh", ico: "sparkle" }
+  { id: "kosmetik",nama: "Kosmetik & Perawatan Tubuh", ico: "sparkle" },
+  { id: "skincare", nama: "Skincare & Kecantikan", ico: "sparkle" },
+  { id: "kewanitaan", nama: "Perawatan Kewanitaan", ico: "drop" },
+  { id: "rumahtangga", nama: "Rumah Tangga", ico: "box" }
 ],
 
   PRODUK: [
@@ -247,6 +250,86 @@ window.SA_DATA = {
     rating: 4.9, terjual: "85+", badge: "Baru",
     varian: ["Blush", "Cream", "Mix"],
     deskripsi: "Paket kado berisi sabun, body butter, dan scrub kecil dalam kotak cantik. Cocok untuk hadiah ulang tahun, hantaran, atau seserahan ibu."
+  },
+
+  /* ---------- BARANG DAGANGAN CICHA (tokocicha.my.id) ---------- */
+  {
+    id: "misschique-retinol-serum", nama: "Misschique Encapsulated Retinol Serum 20 ml", kategori: "skincare",
+    harga: 190000, hargaCoret: 0, gambar: "assets/img/cicha/misschique-encapsulated-retinol-serum.jpg",
+    galeri: [], badge: "Baru", varian: ["20 ml"],
+    deskripsi: "Serum retinol terenkapsulasi 5% + Niacinamide 4% — membantu meremajakan kulit dengan lembut dan minim iritasi."
+  },
+  {
+    id: "misschique-peeling-serum", nama: "Misschique Peeling Serum 20 ml", kategori: "skincare",
+    harga: 130000, hargaCoret: 0, gambar: "assets/img/cicha/misschique-peeling-serum.jpg",
+    galeri: [], badge: "Baru", varian: ["20 ml"],
+    deskripsi: "Peeling serum multi-acid: 5% AHA · 0,5% BHA · 2% PHA — eksfoliasi lembut, termasuk untuk kulit sensitif."
+  },
+  {
+    id: "ichiboss-papaya-soap", nama: "ICHIBOSS Papaya Brightening Soap", kategori: "skincare",
+    harga: 38500, hargaCoret: 0, gambar: "assets/img/cicha/ichiboss-papaya-brightening-soap.jpg",
+    galeri: [], badge: "Baru", varian: ["1 pcs"],
+    deskripsi: "Sabun perawatan kulit cerah & glowing — membantu mencerahkan, menyamarkan noda hitam dan bekas jerawat, serta melembapkan."
+  },
+  {
+    id: "ichiboss-tea-tree-soap", nama: "ICHIBOSS Tea Tree Acne Care Soap 50 g", kategori: "skincare",
+    harga: 38500, hargaCoret: 0, gambar: "assets/img/cicha/ichiboss-tea-tree-acne-care-soap.jpg",
+    galeri: [], badge: "Baru", varian: ["50 g"],
+    deskripsi: "Sabun perawatan kulit berjerawat — melawan bakteri penyebab jerawat, mengurangi minyak, dan menjaga kelembapan kulit."
+  },
+  {
+    id: "bavvoc-spray-bubble-gum", nama: "Bavvoc Feminine Spray Bubble Gum 10 ml", kategori: "kewanitaan",
+    harga: 38500, hargaCoret: 0, gambar: "assets/img/cicha/bavvoc-feminine-spray-bubble-gum.jpg",
+    galeri: [], badge: "Baru", varian: ["10 ml"],
+    deskripsi: "Spray area kewanitaan bebas alkohol & bebas kimia — pH balance dengan aroma bubble gum yang manis."
+  },
+  {
+    id: "bavvoc-spray-strawberry", nama: "Bavvoc Feminine Spray Strawberry 10 ml", kategori: "kewanitaan",
+    harga: 38500, hargaCoret: 0, gambar: "assets/img/cicha/bavvoc-feminine-spray-strawberry.jpg",
+    galeri: [], badge: "Baru", varian: ["10 ml"],
+    deskripsi: "Spray area kewanitaan bebas alkohol & bebas kimia — pH balance dengan aroma strawberry yang segar."
+  },
+  {
+    id: "bavvoc-spray-vanilla", nama: "Bavvoc Feminine Spray Vanilla 10 ml", kategori: "kewanitaan",
+    harga: 39500, hargaCoret: 0, gambar: "assets/img/cicha/bavvoc-feminine-spray-vanilla.jpg",
+    galeri: [], badge: "Baru", varian: ["10 ml"],
+    deskripsi: "Spray area kewanitaan bebas alkohol & bebas kimia — pH balance dengan aroma vanilla yang lembut."
+  },
+  {
+    id: "bavvoc-feminine-wash", nama: "Bavvoc Pure Essence Feminine Wash", kategori: "kewanitaan",
+    harga: 55780, hargaCoret: 0, gambar: "assets/img/cicha/bavvoc-pure-essence-feminine-wash.jpg",
+    galeri: [], badge: "Baru", varian: ["1 botol"],
+    deskripsi: "Pembersih area kewanitaan dengan 3 bahan aktif + 10 ekstrak alami — pH balance, membantu mencerahkan, dan perlindungan anti bakteri."
+  },
+  {
+    id: "bavvoc-lumi-veil", nama: "Bavvoc Lumi Veil — Soft Care Brighter Arm 10 g", kategori: "skincare",
+    harga: 0, hargaCoret: 0, gambar: "assets/img/cicha/bavvoc-lumi-veil.jpg",
+    galeri: [], badge: "Baru", varian: ["10 g"],
+    deskripsi: "Krim perawatan lembut yang membantu mencerahkan & melembapkan kulit — gentle on skin untuk pemakaian harian. Stok sedang kosong: tetap bisa chat untuk PO atau kabar stok berikutnya."
+  },
+  {
+    id: "optimo-toilet-cleaner", nama: "ÓPTIMO+ Toilet Cleaner 1000 ml", kategori: "rumahtangga",
+    harga: 62000, hargaCoret: 0, gambar: "assets/img/cicha/optimo-toilet-cleaner.jpg",
+    galeri: [], badge: "Baru", varian: ["1000 ml"],
+    deskripsi: "Penghilang noda membandel, kerak, karat & bekas sabun pada kamar mandi — bersih, higienis, dan berkilau."
+  },
+  {
+    id: "optimo-oxi-bleach", nama: "ÓPTIMO+ Oxi-Bleach 500 gr", kategori: "rumahtangga",
+    harga: 35000, hargaCoret: 0, gambar: "assets/img/cicha/optimo-oxi-bleach.jpg",
+    galeri: [], badge: "Baru", varian: ["500 gr"],
+    deskripsi: "Penghilang noda pakaian berbasis oksigen — bersih maksimal, pakaian kembali seperti baru."
+  },
+  {
+    id: "optimo-multi-spray", nama: "ÓPTIMO+ Multi Spray Perfume 60 ml", kategori: "rumahtangga",
+    harga: 18500, hargaCoret: 0, gambar: "assets/img/cicha/optimo-multi-spray-perfume.jpg",
+    galeri: [], badge: "Baru", varian: ["60 ml"],
+    deskripsi: "Penghilang bau tak sedap + pewangi tahan lama untuk helm, sofa, sepatu, bantal, dan permukaan lain."
+  },
+  {
+    id: "optimo-multi-cleaner", nama: "ÓPTIMO+ Multi Cleaner 100 ml", kategori: "rumahtangga",
+    harga: 28000, hargaCoret: 0, gambar: "assets/img/cicha/optimo-multi-cleaner.jpg",
+    galeri: [], badge: "Baru", varian: ["100 ml"],
+    deskripsi: "Pembersih noda serbaguna berbentuk busa — cepat, praktis, tanpa dibilas."
   }
 ],
 
