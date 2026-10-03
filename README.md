@@ -82,6 +82,33 @@ Catatan kecil:
 - Bila produk di website berubah, buat ulang dokumennya:
   `node scripts/katalog-wa.cjs` → `node scripts/sync-panel.cjs` → `ADMIN_PASSWORD='...' node scripts/test-auth.cjs`.
 
+## 1d. Jalur cepat: katalog lewat Meta (Commerce Manager)
+
+Katalog juga bisa dibuat di **Meta Commerce Manager** lalu dihubungkan ke akun WhatsApp Business
+(088214949749) — semua produk masuk sekaligus lewat satu berkas feed, tanpa mengetik satu-satu di HP.
+Berkas feed-nya sudah dibuatkan: **`katalog-meta.csv`** (38 produk, kolomnya mengikuti spesifikasi Meta).
+
+Langkah-langkahnya (dilakukan oleh Anda sendiri, karena butuh login akun Facebook/Meta Anda):
+
+1. Buka **business.facebook.com** → buat akun bisnis bila belum ada (gratis, pakai akun Facebook Anda).
+2. Buka **Commerce Manager** (commerce.facebook.com / menu Semua Alat → Commerce Manager) →
+   **Buat katalog** → pilih "Unggah info produk" → beri nama, mis. `Sofia Collection`.
+3. Di katalog itu: **Tambahkan produk → unggah melalui feed data** → unggah `katalog-meta.csv` →
+   tunggu diproses, perbaiki bila ada peringatan.
+4. Hubungkan ke WhatsApp: **Pengaturan Bisnis → Akun WhatsApp** (tambahkan nomor 088214949749 bila
+   belum) → **WhatsApp Manager → Katalog → Pilih katalog → Sambungkan**. Satu akun WA hanya bisa
+   memakai satu katalog.
+5. Buka aplikasi WA Business di HP → katalog akan mengikuti katalog Meta; bagikan linknya lewat ikon 🔗.
+
+Catatan:
+
+- Meta mensyaratkan foto **minimal 500×500 px**. Skrip feed sudah menukar otomatis foto utama yang
+  kekecilan dengan foto galeri yang layak; hanya **Bavvoc Lumi Veil** yang belum punya foto sebesar
+  itu (dan memang belum ada harga/stok — di feed diberi `out of stock`).
+- Produk tanpa harga (Bavvoc Lumi Veil) diberi harga `0 IDR` + `out of stock`; setelah harga pasti,
+  ubah barisnya di CSV lalu unggah ulang, atau edit langsung di Commerce Manager.
+- Buat ulang feed kapan saja: `node scripts/katalog-meta.cjs`.
+
 ## 2. Isi repository
 
 | Berkas / folder | Keterangan |
@@ -90,7 +117,9 @@ Catatan kecil:
 | `assets/img/cicha/` | 13 foto produk dari tokocicha.my.id (bagian 1b) |
 | `scripts/pasang-produk-cicha.cjs` | Skrip sekali pakai: memasukkan produk Cicha + merapikan `index.html` dari sumber `src/` |
 | `scripts/katalog-wa.cjs` | Membuat `katalog-wa.html`/`katalog-wa.txt` (bahan salin-tempel katalog WA Business) + menyamakan logika `index.html` |
+| `scripts/katalog-meta.cjs` | Membuat `katalog-meta.csv` — feed Meta Commerce Manager untuk jalur cepat katalog WA (bagian 1d) |
 | `katalog-wa.html`, `katalog-wa.txt` | Bahan memasukkan semua produk ke katalog WhatsApp Business (bagian 1c) |
+| `katalog-meta.csv` | Feed produk untuk Meta Commerce Manager (bagian 1d) |
 | `assets/logo-sc.jpg` | Logo Sofia Collection, **800×800 (persegi)** — tampil 96×96 px di kartu brand |
 | `assets/foto-sentot.jpg` | Foto Anda untuk kartu **SENTOT AI** (persegi, min. 400×400). Belum ada? Slot otomatis menampilkan monogram "S" dengan lencana **SAI** tetap di pojoknya |
 | `api/admin.js` | Titik masuk Vercel Function (login, logout, sesi, panel, proxy GitHub) |

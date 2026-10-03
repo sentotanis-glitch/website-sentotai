@@ -189,6 +189,9 @@ footer{margin-top:40px;color:var(--muted);font-size:.85rem;text-align:center}
   </p>
   <p style="font-size:.85rem">Dibuat otomatis dari data website, ${esc(new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' }))}.
   Ada versi teks polos juga: <code style="background:rgba(255,255,255,.15);color:#fff">katalog-wa.txt</code>.</p>
+  <p style="font-size:.85rem;margin-top:10px">⚡ <strong>Jalur lebih cepat:</strong> lewat Meta Commerce Manager semua produk bisa masuk
+  sekaligus lewat satu berkas feed — tidak perlu salin-tempel satu-satu. Lihat <code style="background:rgba(255,255,255,.15);color:#fff">katalog-meta.csv</code>
+  dan README bagian 1d.</p>
 </header>
 
 <h2>Langkah 1 · Siapkan foto produk dulu</h2>
