@@ -362,6 +362,26 @@ function bukaDetail(id) {
   bukaModal("#detailModal");
 }
 
+/* ---------- tautan langsung ke produk (?produk=ID) ----------
+   Dipakai oleh tautan item katalog WhatsApp Business: saat tautan dibuka,
+   halaman langsung menampilkan detail produk yang dimaksud — tidak berhenti
+   di beranda saja. Mendukung bentuk ?produk=ID maupun #produk=ID. */
+function bukaDariTautan() {
+  let id = "";
+  try { id = new URLSearchParams(location.search).get("produk") || ""; } catch (e) { /* abaikan */ }
+  if (!id && location.hash) {
+    const m = location.hash.match(/^#produk=(.+)$/);
+    if (m) { try { id = decodeURIComponent(m[1]); } catch (e) { id = m[1]; } }
+  }
+  id = String(id || "").trim();
+  if (!id) return;
+  const p = PRODUK.find(x => x.id === id);
+  if (!p) return;
+  const katalog = $("#katalog");
+  if (katalog) katalog.scrollIntoView();
+  bukaDetail(p.id);
+}
+
 /* ---------- modal checkout ---------- */
 function susunPesan() {
   const nama = $("#fNama").value.trim() || "-";
@@ -449,6 +469,9 @@ function init() {
 
   // tahun di footer
   $("#tahun").textContent = new Date().getFullYear();
+
+  // tautan langsung ke produk (?produk=ID) — dipakai tautan katalog WhatsApp Business
+  bukaDariTautan();
 }
 
 document.addEventListener("DOMContentLoaded", init);

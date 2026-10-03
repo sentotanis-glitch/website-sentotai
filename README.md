@@ -60,6 +60,28 @@ Catatan kecil:
 - Skrip sekali pakai yang dipakai untuk memasukkan semuanya: `node scripts/pasang-produk-cicha.cjs`
   (setelahnya wajib `node scripts/sync-panel.cjs`, lalu `ADMIN_PASSWORD='...' node scripts/test-auth.cjs`).
 
+## 1c. Katalog WhatsApp Business (disiapkan 3 Oktober 2026)
+
+Katalog di aplikasi WA Business tidak bisa diisi dari luar — itemnya diketik langsung di aplikasi.
+Supaya memindahkan **38 produk** website ke katalog WA Business tinggal salin-tempel, sudah disiapkan:
+
+| Berkas | Isi |
+|---|---|
+| `katalog-wa.html` | Dokumen siap pakai: langkah-langkah di aplikasi WA Business + kartu per produk (foto, nama, harga, deskripsi + varian, tautan, kode) dengan tombol **Salin** di tiap kolom. Buka berkasnya di browser. |
+| `katalog-wa.txt` | Versi teks polos — sama isinya, enak disalin langsung dari HP. |
+
+Catatan kecil:
+
+- Tiap item katalog diberi **tautan langsung ke produknya** (`https://sentot.my.id/?produk=ID`) —
+  begitu pelanggan mengetuk tautan item di WA, website langsung membuka halaman detail produk itu,
+  bukan beranda. Fitur `?produk=ID` sudah dipasang di `src/app.js` (fungsi `bukaDariTautan`).
+- Produk tanpa harga (Bavvoc Lumi Veil) ditandai: kolom harga WA dikosongkan saja.
+- Foto untuk katalog: pakai foto produk di website (tekan lama → simpan) atau berkas di `assets/img/`.
+- Setelah semua item masuk: bagikan link katalog (ikon 🔗 di halaman Katalog WA) dan cantumkan
+  `https://sentot.my.id` di kolom situs web Profil Bisnis.
+- Bila produk di website berubah, buat ulang dokumennya:
+  `node scripts/katalog-wa.cjs` → `node scripts/sync-panel.cjs` → `ADMIN_PASSWORD='...' node scripts/test-auth.cjs`.
+
 ## 2. Isi repository
 
 | Berkas / folder | Keterangan |
@@ -67,6 +89,8 @@ Catatan kecil:
 | `index.html`, `src/{data,app,styles}.*`, `assets/` | Toko publik. Konten tetap diedit lewat panel |
 | `assets/img/cicha/` | 13 foto produk dari tokocicha.my.id (bagian 1b) |
 | `scripts/pasang-produk-cicha.cjs` | Skrip sekali pakai: memasukkan produk Cicha + merapikan `index.html` dari sumber `src/` |
+| `scripts/katalog-wa.cjs` | Membuat `katalog-wa.html`/`katalog-wa.txt` (bahan salin-tempel katalog WA Business) + menyamakan logika `index.html` |
+| `katalog-wa.html`, `katalog-wa.txt` | Bahan memasukkan semua produk ke katalog WhatsApp Business (bagian 1c) |
 | `assets/logo-sc.jpg` | Logo Sofia Collection, **800×800 (persegi)** — tampil 96×96 px di kartu brand |
 | `assets/foto-sentot.jpg` | Foto Anda untuk kartu **SENTOT AI** (persegi, min. 400×400). Belum ada? Slot otomatis menampilkan monogram "S" dengan lencana **SAI** tetap di pojoknya |
 | `api/admin.js` | Titik masuk Vercel Function (login, logout, sesi, panel, proxy GitHub) |
